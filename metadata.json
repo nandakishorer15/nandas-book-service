@@ -1,0 +1,6 @@
+{
+  "name": "Nanda's service to the book readers",
+  "description": "It's a book world for the book readers by a fellow reader",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
