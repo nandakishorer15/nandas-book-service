@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
@@ -24,8 +24,11 @@ jobs:
         with:
           gradle-version: '9.3.1'
 
-      - name: Create dummy .env for Secrets plugin
-        run: touch .env
+      - name: Generate debug keystore and dummy configs
+        run: |
+          touch .env
+          echo '{"project_info":{"project_number":"0","project_id":"app"},"client":[{"client_info":{"mobilesdk_app_id":"1:0:android:0","android_client_info":{"package_name":"com.aistudio.bookreaders.nandakishore"}},"api_key":[{"current_key":"dummy"}]}]}' > app/google-services.json
+          keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
 
       - name: Build Debug APK
         run: gradle :app:assembleDebug -x test
